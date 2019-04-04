@@ -16,7 +16,7 @@ def get_bracelet_footstep(api_bracelet, collection):
 
     bracelet_id = get_bracelet_id(api_bracelet)
     response = requests.get('http://{}/footstep/'.format(api_bracelet) + bracelet_id)
-    print(response)
+    print(response.text)
 
     collection.find_one_and_update({'id': bracelet_id}, {"$set": response.json()}, upsert=True)
 
@@ -36,7 +36,7 @@ def main():
     parser = argparse.ArgumentParser()
     # Add each available arguments
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
-    parser.add_argument('-H', '--hostname', help='Hostname used to connect to the Mongo database', type=str, default="localhost")
+    parser.add_argument('-H', '--hostname', help='Hostname used to connect to the Mongo database', type=str, default="0.0.0.0")
     parser.add_argument('-P', '--port', help='Port used to connect to the Mongo database', type=int, default=27017, choices=range(1, 65535))
     parser.add_argument('-D', '--database', help='Name used to connect to the Mongo database', type=str, default='test')
     parser.add_argument('-u', '--user', help='User used to connect to the Mongo database', type=str, default='user')
