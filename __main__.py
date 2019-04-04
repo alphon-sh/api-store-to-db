@@ -38,10 +38,10 @@ def main():
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('-H', '--hostname', help='Hostname used to connect to the Mongo database', type=str, default="localhost")
     parser.add_argument('-P', '--port', help='Port used to connect to the Mongo database', type=int, default=27017, choices=range(1, 65535))
-    parser.add_argument('-D', '--database', help='Name used to connect to the Mongo database', type=str)
-    parser.add_argument('-u', '--user', help='User used to connect to the Mongo database', type=str)
-    parser.add_argument('-p', '--password', help='Password used to connect to the Mongo database', type=str)
-    parser.add_argument('-A', '--api_hostname', help='Hostname used to connect to API-bracelet', type=str, default="localhost")
+    parser.add_argument('-D', '--database', help='Name used to connect to the Mongo database', type=str, default='test')
+    parser.add_argument('-u', '--user', help='User used to connect to the Mongo database', type=str, default='user')
+    parser.add_argument('-p', '--password', help='Password used to connect to the Mongo database', type=str, default='password')
+    parser.add_argument('-A', '--api_hostname', help='Hostname used to connect to API-bracelet', type=str, default="35.205.68.128")
 
     args = parser.parse_args()
 
