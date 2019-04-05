@@ -36,12 +36,12 @@ def main():
     parser = argparse.ArgumentParser()
     # Add each available arguments
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
-    parser.add_argument('-H', '--hostname', help='Hostname used to connect to the Mongo database', type=str, default="0.0.0.0")
+    parser.add_argument('-H', '--hostname', help='Hostname used to connect to the Mongo database', type=str, default=os.environ.get('HOSTNAME', None))
     parser.add_argument('-P', '--port', help='Port used to connect to the Mongo database', type=int, default=27017, choices=range(1, 65535))
-    parser.add_argument('-D', '--database', help='Name used to connect to the Mongo database', type=str, default='test')
-    parser.add_argument('-u', '--user', help='User used to connect to the Mongo database', type=str, default='user')
-    parser.add_argument('-p', '--password', help='Password used to connect to the Mongo database', type=str, default='password')
-    parser.add_argument('-A', '--api_hostname', help='Hostname used to connect to API-bracelet', type=str, default="35.205.68.128")
+    parser.add_argument('-D', '--database', help='Name used to connect to the Mongo database', type=str, default=os.environ.get('DATABASE', None))
+    parser.add_argument('-u', '--user', help='User used to connect to the Mongo database', type=str, default=os.environ.get('USER', None))
+    parser.add_argument('-p', '--password', help='Password used to connect to the Mongo database', type=str, default=os.environ.get('PASSWORD', None))
+    parser.add_argument('-A', '--api_hostname', help='Hostname used to connect to API-bracelet', type=str, default=os.environ.get('API_BRACELET', None))
 
     args = parser.parse_args()
 
@@ -54,9 +54,11 @@ def main():
 
     # Init connexion to mongodb
     # for exemple : mongodb+srv://26academy:<PASSWORD>@cluster0-bihus.mongodb.net/test?retryWrites=true
-    client = MongoClient('mongodb://{}:{}@{}:{}'.format(user, password, hostname, port))
     
-    database = client[database]
+    client = MongoClient('mongodb://{}:{}@{}:{}'.format(user, password, hostname, port))
+    print (user,password,hostname,port)   
+    
+    database = client[database]   
     collection = database['bracelet']
 
     get_bracelet_footstep(api_bracelet, collection)
