@@ -1,6 +1,7 @@
 import argparse
 import requests
 import threading
+import os
 from pymongo import MongoClient
 
 from _version import __version__
